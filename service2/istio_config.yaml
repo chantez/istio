@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: isitosprinboot
-        image: gcr.io/efx-datafabric-poc1/mgmtexampleisitosprinboot:jan19v1
+        image: gcr.io/blogcc/springio:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
