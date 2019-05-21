@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: isitosprinboot
-        image: gcr.io/blogcc/springio/docker-demo-istio:v1
+        image: gcr.io/blogcc/docker-demo-istio:v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
