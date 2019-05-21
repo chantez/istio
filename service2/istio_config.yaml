@@ -14,18 +14,18 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: isitosprinboot-v2
+  name: isitosprinboot-v1
 spec:
   replicas: 1
   template:
     metadata:
       labels:
         app: isitosprinboot
-        version: v2
+        version: v1
     spec:
       containers:
       - name: isitosprinboot
-        image: springio
+        image: gcr.io/blogcc/springio/docker-demo-istio:v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
