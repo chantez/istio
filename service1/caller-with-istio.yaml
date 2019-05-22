@@ -30,7 +30,7 @@ spec:
         version: v1
     spec:
       containers:
-      - image: chantez/service1-istio:2.0
+      - image: chantez/service1-istio:1.0
         imagePullPolicy: IfNotPresent
         name: service1-istio
         ports:
