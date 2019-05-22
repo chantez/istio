@@ -31,4 +31,21 @@ public class CallerController {
 		return "this is a simple service for test istio";
 	}
 
+	@GetMapping("/ping2")
+	public String ping2() {
+
+		return "PING 3. this is the second simple service for test istio";
+	}
+
+	@GetMapping("/ping3")
+	public String ping3() {
+
+		RestTemplate restTemplate = new RestTemplate();
+		String fooResourceUrl
+				= "http://helloworld:5000/hello";
+		ResponseEntity<String> response
+				= restTemplate.getForEntity(fooResourceUrl, String.class);
+
+		return response.getBody();
+	}
 }
