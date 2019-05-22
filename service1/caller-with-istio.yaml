@@ -1,22 +1,22 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: service1-istio
+  name: service2-istio
   labels:
-    app: service1-istio
+    app: service2-istio
 spec:
   type: NodePort
   ports:
   - port: 8090
     name: http
   selector:
-    app: service1-istio
+    app: service2-istio
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   creationTimestamp: null
-  name: service1-istio-v1
+  name: service2-istio-v1
 spec:
   replicas: 1
   strategy: {}
@@ -26,15 +26,15 @@ spec:
         sidecar.istio.io/status: '{"version":"43466efda2266e066fb5ad36f2d1658de02fc9411f6db00ccff561300a2a3c78","initContainers":["istio-init","enable-core-dump"],"containers":["istio-proxy"],"volumes":["istio-envoy","istio-certs"]}'
       creationTimestamp: null
       labels:
-        app: service1-istio
+        app: service2-istio
         version: v1
     spec:
       containers:
       - image: chantez/service1-istio:1.0
         imagePullPolicy: IfNotPresent
-        name: service1-istio
+        name: service2-istio
         ports:
-        - containerPort: 8090
+        - containerPort: 8091
       - args:
         - proxy
         - sidecar
@@ -43,7 +43,7 @@ spec:
         - --binaryPath
         - /usr/local/bin/envoy
         - --serviceCluster
-        - service1-istio
+        - service2-istio
         - --drainDuration
         - 45s
         - --parentShutdownDuration
