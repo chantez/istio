@@ -25,7 +25,7 @@ spec:
   http:
   - match:
     - uri:
-        exact: /caller/ping
+        prefix: /caller/ping
     route:
     - destination:
         host: service1
