@@ -1,31 +1,31 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: service2-istio
+  name: service3-istio
   labels:
-    app: service2-istio
+    app: service3-istio
 spec:
   ports:
   - port: 8091
     name: http
   selector:
-    app: service2-istio
+    app: service3-istio
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: service2-istio-v1
+  name: service3-istio-v1
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: service2-istio
+        app: service3-istio
         version: v1
     spec:
       containers:
-      - name: service2-istio
-        image: chantez/servic1-istio:1.0
+      - name: service3-istio
+        image: chantez/service1-istio:1.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8091
@@ -37,7 +37,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: service2-istio-gateway
+  name: service3-istio-gateway
 spec:
   selector:
     istio: ingressgateway # use istio default controller
@@ -52,18 +52,18 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: service2-istio
+  name: service3-istio
 spec:
   hosts:
   - "*"
   gateways:
-  - service2-istio-gateway
+  - service3-istio-gateway
   http:
   - match:
     - uri:
         prefix: /
     route:
     - destination:
-        host: service2-istio
+        host: service3-istio
         port:
           number: 8091
