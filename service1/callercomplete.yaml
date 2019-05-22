@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: service1-istio
-        image: chantez/service1-istio:1.0
+        image: terraformchantez/service1-istio:1.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8090
@@ -48,3 +48,22 @@ spec:
       protocol: HTTP
     hosts:
     - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: service1-istio
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - service1-istio-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: service1-istio
+        port:
+          number: 8090
