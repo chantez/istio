@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: service1-istio
-        image: terraformchantez/service1-istio:1.0
+        image: gcr.io/terraformchantez/service1-istio:1.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8090
