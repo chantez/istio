@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,14 +24,30 @@ public class CallerController {
 
 	@GetMapping("/ping")
 	public String ping() {
-		
-		return "this is a simple service for test istio";
+
+		LOGGER.info("This is a simple service for testing");
+		return "this is a simple service for testing";
 	}
 
 	@GetMapping("/ping2")
 	public String ping2() {
 
-		return "PING 3. this is the second simple service for test istio";
+		LOGGER.warn("This is the SECOND simple service for testing2");
+		return "PING 2. this is the second simple service for testing2";
+	}
+
+	@GetMapping("/ping4")
+	public String ping4() {
+
+		LOGGER.error("This is the FOURTH simple service for testing2");
+		return "PING 4. this is the fourth simple service for testing2";
+	}
+
+	@GetMapping("/health")
+	public ResponseEntity<Object> health() {
+
+		LOGGER.info("health endpoint");
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 	@GetMapping("/ping3")

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service1
+  labels:
+    app: service1
+spec:
+  ports:
+  - port: 8090
+    name: http
+  selector:
+    app: service1
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: service1-v1
+  labels:
+    version: v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: service1
+        version: v1
+    spec:
+      containers:
+      - name: service1
+        image: gcr.io/terraformchantez/service1-istio:3.0
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent #Always
+        ports:
+        - containerPort: 8090
