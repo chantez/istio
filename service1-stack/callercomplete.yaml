@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service1-istio
+  labels:
+    app: service1-istio
+spec:
+  ports:
+  - port: 8090
+    name: http
+  selector:
+    app: service1-istio
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: service1-istio-v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: service1-istio
+        version: v1
+    spec:
+      containers:
+      - name: service1-istio
+        image: gcr.io/terraformchantez/service1-istio:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8090
+---
+
+###########################################################################
+# (gateway)
+##########################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: service1-istio-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: service1-istio
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - service1-istio-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: service1-istio
+        port:
+          number: 8090
